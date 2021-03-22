@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-Rscript data-raw/tidy_energy.R
+Rscript --vanilla data-raw/tidy_energy.R
 
 if [[ "$(git status --porcelain)" != "" ]]; then
     git config --global user.name 'MHenderson'
