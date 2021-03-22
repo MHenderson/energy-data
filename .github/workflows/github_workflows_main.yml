@@ -16,4 +16,4 @@ jobs:
           ref: 'main'
       - name: Data refresh
         run: |
-            bash ./data-raw/data_refresh.sh
+            bash ./data_refresh.sh
