@@ -1,0 +1,19 @@
+name: Data Refresh
+
+on:
+  schedule:
+    - cron:  '0 */1 * * *'
+jobs:
+  build:
+    name: refresh the dashboard
+    runs-on: ubuntu-18.04
+    container:
+      image: mjhenderson/energy-use
+    steps:
+      - name: checkout_repo
+        uses: actions/checkout@v2
+        with:
+          ref: 'master'
+      - name: Data refresh
+        run: |
+            bash ./data-raw/data_refresh.sh
