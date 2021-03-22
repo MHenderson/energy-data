@@ -7,7 +7,7 @@ if [[ "$(git status --porcelain)" != "" ]]; then
     git config --global user.email 'matthew.james.henderson@gmail.com'
     git add data/*
     git commit -m "data auto-update"
-    git push origin master
+    git push origin main
 else
 echo "Nothing to commit..."
 fi
