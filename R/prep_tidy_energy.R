@@ -15,7 +15,7 @@ prep_tidy_energy <- function(energy) {
       electricity_total = cumsum(electricity_cost),
     ) %>%
     tidyr::pivot_longer(
-      !c(date, at_home, had_bath, chimken, laundry, fish, parents, supplier, tarrif_name),
+      !c(date, supplier, tarrif_name),
       names_to = c("fuel", "var"),
       names_sep = "_"
     ) %>%
