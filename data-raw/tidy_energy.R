@@ -5,7 +5,7 @@ library(googlesheets4)
 library(purrr)
 
 source("R/add_costs.R")
-source("R/tariff_history.R")
+source("R/tariff_series.R")
 
 gs4_deauth()
 
