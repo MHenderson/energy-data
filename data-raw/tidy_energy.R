@@ -3,7 +3,8 @@
 library(dplyr)
 library(googlesheets4)
 
-source("R/prep_tidy_energy.R")
+source("R/add_costs.R")
+source("R/tariff_history.R")
 
 gs4_deauth()
 
@@ -21,14 +22,25 @@ energy_2021 <- sheet_id %>%
 
 energy <- bind_rows(energy_2019, energy_2020, energy_2021)
 
-tidy_energy <- prep_tidy_energy(energy)
-
 bills <- sheet_id %>%
   range_read("bills")
 
 readings <- sheet_id %>%
   range_read("readings")
 
+tariffs <- sheet_id %>%
+  range_read("tariffs")
+
+energy <- add_costs(energy, tariffs)
+
+tidy_energy <- energy %>%
+  tidyr::pivot_longer(
+    !c(date, supplier, tariff_name, tariff_id, seq_id),
+    names_to = c("fuel", "var"),
+    names_sep = "_"
+  )
+
 saveRDS(tidy_energy, file = "data/tidy_energy.rds")
 saveRDS(bills, file = "data/bills.rds")
 saveRDS(readings, file = "data/readings.rds")
+saveRDS(tariffs, file = "data/tariffs.rds")
