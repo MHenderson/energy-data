@@ -1,4 +1,4 @@
-add_costs <- function(energy, tariffs) {
+add_costs <- function(energy, tariffs, tariff_history) {
 
   energy_ <- energy %>%
     mutate(date = as.Date(date)) %>%
@@ -9,7 +9,7 @@ add_costs <- function(energy, tariffs) {
   energy__ <- left_join(energy_, tariffs, by = "tariff_id")
 
   tariffs_ <- tariffs %>%
-    tariff_history() %>%
+    tariff_series(tariff_history) %>%
     left_join(energy)
 
   bind_rows(energy__, tariffs_) %>%

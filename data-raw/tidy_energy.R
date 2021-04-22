@@ -2,6 +2,7 @@
 
 library(dplyr)
 library(googlesheets4)
+library(purrr)
 
 source("R/add_costs.R")
 source("R/tariff_history.R")
@@ -31,7 +32,15 @@ readings <- sheet_id %>%
 tariffs <- sheet_id %>%
   range_read("tariffs")
 
-energy <- add_costs(energy, tariffs)
+tariff_history <- tribble(
+  ~tariff_id, ~begin, ~end,
+  4, as.Date("2019-07-16"), as.Date("2019-09-01"),
+  3, as.Date("2019-09-02"), as.Date("2020-08-30"),
+  2, as.Date("2020-08-31"), as.Date("2020-12-05"),
+  1, as.Date("2020-12-06"), Sys.Date()
+)
+
+energy <- add_costs(energy, tariffs, tariff_history)
 
 tidy_energy <- energy %>%
   tidyr::pivot_longer(
